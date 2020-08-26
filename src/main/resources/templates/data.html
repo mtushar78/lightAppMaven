@@ -8,10 +8,25 @@
 </head>
 <body>
 <div th:replace="fragment/navbar.html :: nav"></div>
-
-<div class="w-100 text-center">
-    <h3>Welcome</h3>
-    <h1>Light APP</h1>
+<div class="container-md">
+    <table class="table">
+        <thead class="thead-light">
+        <tr>
+            <th scope="col">ZONE</th>
+            <th scope="col">DB NO</th>
+            <th scope="col">Light NO</th>
+            <th scope="col">Status</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="light : ${lights}">
+            <td th:text="${light.getZoneNo()}">test</td>
+            <td th:text="${light.getDbNo()}">test</td>
+            <td th:text="${light.getLightNo()}">test</td>
+            <td th:text="${light.getRealLightStatus()}">test</td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"

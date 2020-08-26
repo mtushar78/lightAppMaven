@@ -1,6 +1,7 @@
 package commit.light.lightproject.controllers;
 
 import commit.light.lightproject.model.LightEntity;
+import commit.light.lightproject.pojo.ShowLightsInList;
 import commit.light.lightproject.services.ApiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,11 +19,24 @@ import java.util.Map;
 public class MainController {
     @Autowired
     ApiService apiService;
-
     @GetMapping
-    public String home(Model model){
-      List<LightEntity> x =   apiService.getAllValues();
-        model.addAttribute("names",x);
+    public String home(){
         return "home";
+    }
+
+    @GetMapping(value = "/list")
+    public String data(Model model){
+        List<LightEntity> x = apiService.getAllValues();
+        ShowLightsInList lightList[] = new ShowLightsInList[x.size()];
+        int index = 0;
+        for (LightEntity entity: x) {
+            lightList[index] = new ShowLightsInList(entity.getLightInfo().getLightDBIdentity().getLightNo(),
+                    entity.getLightInfo().getLightDBIdentity().getDbNo(),
+                    entity.getLightInfo().getZoneNo(),
+                    entity.isTurnedOn());
+            index++;
+        }
+        model.addAttribute("lights",lightList);
+        return "data";
     }
 }
