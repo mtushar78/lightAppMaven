@@ -17,4 +17,8 @@ public interface LightRepo extends JpaRepository<LightEntity, Integer> {
     void updateIsOn(int isTurnedOn, int dbNo, int lightNo);
 
     public LightEntity findByLightInfo(LightInfo lightInfo);
+
+    @Query(value = "SELECT id FROM light_entity WHERE light_info_db_no = :dbNo and light_info_light_no = :lightNo",
+            nativeQuery = true)
+    Integer getLightID(int dbNo, int lightNo);
 }
